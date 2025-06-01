@@ -90,7 +90,7 @@ class ProductController extends Controller
         try {
             $this->service->updateProduct([
                 'name' => $data['name'],
-                'category_id' => $data['category'],  
+                'category_id' => $data['category'], 
                 'description' => $data['description'] ?? null,
                 'price' => $data['price'],
             ], $id);

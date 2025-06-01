@@ -24,14 +24,13 @@
           </li>
         </ul>
 
-     
-          <!-- Иконка корзины -->
+      
           <router-link to="/cart" class="btn btn-outline-light position-relative">
-            <i class="bi bi-cart-fill"></i>
-            <!-- Счётчик товаров в корзине (опционально) -->
+            <i class="bi bi-receipt"></i>
+       
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              3
-              <span class="visually-hidden">товара в корзине</span>
+              {{orderCountNew}}
+              <span class="visually-hidden">Управление заказами</span>
             </span>
           </router-link>
     
@@ -39,3 +38,23 @@
     </div>
   </nav>
 </template>
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const orderCountNew = ref(null)
+async function fetchOrder() {
+    try {
+        
+        const response = await axios.get('http://localhost/api/order')
+        orderCountNew.value = response.data.count
+       
+        console.log(response)
+    } catch (error) {
+        console.error('Ошибка при получении категорий:', error)
+    }
+}
+onMounted(() => {
+      fetchOrder()
+    })
+</script>

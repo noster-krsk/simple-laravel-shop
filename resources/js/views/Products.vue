@@ -174,8 +174,10 @@ function showSuccess(msg) {
     }, 3000)
 }
 
-onMounted(fetchProducts)
-fetchCategories()
+    onMounted(() => {
+      fetchProducts()
+      fetchCategories()
+    })
 
 </script>
 <style scoped>
