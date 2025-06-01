@@ -1,7 +1,8 @@
 <template>
-   <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">Система управления товарами и заказами</a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -11,24 +12,29 @@
           <li class="nav-item">
             <router-link to="/" class="nav-link" aria-current="page">Товары</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/add" class="nav-link">Добавление товаров</router-link>
-          </li>
-          <li class="nav-item">
-             <router-link to="/" class="nav-link">Просмотр заказа</router-link>
-          </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Добавление товаров</a>
+
+    
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Управление товар</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Действие</a></li>
-              <li><a class="dropdown-item" href="#">Еще одно действие</a></li>
-              <li><a class="dropdown-item" href="#">Здесь кое-что еще</a></li>
+              <li><router-link to="/add" class="dropdown-item">Добавление товаров</router-link></li>
+              <li><router-link to="/products" class="dropdown-item">Просмотр товаров</router-link></li>
             </ul>
-          </li> -->
+          </li>
         </ul>
-        <!-- <form role="search">
-          <input class="form-control" type="search" placeholder="Поиск" aria-label="Поиск">
-        </form> -->
+
+     
+          <!-- Иконка корзины -->
+          <router-link to="/cart" class="btn btn-outline-light position-relative">
+            <i class="bi bi-cart-fill"></i>
+            <!-- Счётчик товаров в корзине (опционально) -->
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              3
+              <span class="visually-hidden">товара в корзине</span>
+            </span>
+          </router-link>
+    
       </div>
     </div>
   </nav>

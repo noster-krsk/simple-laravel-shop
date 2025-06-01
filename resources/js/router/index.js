@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Импорт Vue-компонентов, которые соответствуют страницам
 import Home from '../views/Home.vue';
 import Add from '../views/Add.vue';
+import Cart from '../views/Cart.vue';
+import Products from '../views/products.vue';
 
 const routes = [
     {
@@ -14,6 +16,16 @@ const routes = [
         path: '/add',
         name: 'add',
         component: Add,
+    },
+    {
+        path: '/cart',
+        name: 'cart',
+        component: Cart,
+    },
+    {
+        path: '/products',
+        name: 'products',
+        component: Products,
     },
     // Можно добавлять больше маршрутов:
     // {

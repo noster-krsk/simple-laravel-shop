@@ -13,10 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    Schema::create('products', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->unsignedBigInteger('category_id'); // внешний ключ
+    $table->float('price');
+    $table->text('description');
+    $table->timestamps();
+
+    $table->foreign('category_id')
+          ->references('id')
+          ->on('categories')
+          ->onDelete('cascade');
+});
     }
 
     /**

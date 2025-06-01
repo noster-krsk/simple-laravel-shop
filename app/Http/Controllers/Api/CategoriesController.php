@@ -16,8 +16,8 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        $categories = Categories::all('name'); // получаем все записи из таблицы
-        $names = $categories->pluck('name');
+        $categories = Categories::all(); // получаем все записи из таблицы
+        $names = $categories->pluck('id','name');
 
         // Возвращаем массив строк
         return response()->json($names);

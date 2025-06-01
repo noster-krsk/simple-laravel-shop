@@ -15,11 +15,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Route::get('/getcategory', function () {
-//     return response()->json(['Легкий', 'Хрупкий', 'Тяжелый']);
-// });
+
 Route::get('/getcategory', [CategoriesController::class, 'index']);
-Route::get('/product', [ProductController::class]);
+
+Route::apiResource('product', ProductController::class);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
