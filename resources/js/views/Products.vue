@@ -1,14 +1,14 @@
 <template>
     <v-container>
         <h2 class="mb-4 text-center">Список товаров</h2>
-        
+
         <v-alert type="success" v-if="success" class="mt-4">
             {{ message }}
         </v-alert>
         <v-data-table :items="products" :headers="headers" item-value="id" class="elevation-1">
-    <template #item.id="{ item }">
-  <span class="d-none">{{ item.columns.id }}</span>
-</template>
+            <template #item.id="{ item }">
+                <span class="d-none">{{ item.columns.id }}</span>
+            </template>
             <template #item.price="{ item }">
                 {{ item.columns.price }} ₽
             </template>
@@ -18,9 +18,9 @@
             <template #item.updated_at="{ item }">
                 {{ formatDate(item.columns.updated_at) }}
             </template>
-      
+
             <template #item.actions="{ item }">
-                <v-icon icon="mdi-pencil" class="me-2" color="primary" @click="openDialog(item.columns)" /> 
+                <v-icon icon="mdi-pencil" class="me-2" color="primary" @click="openDialog(item.columns)" />
                 <v-icon icon="mdi-delete" color="red" @click="deleteProduct(item.columns)" />
             </template>
         </v-data-table>
@@ -33,18 +33,28 @@
                     <v-text-field v-model="selectedProduct.name" label="Название" variant="underlined"
                         class="form-control" />
 
-                    
+
                     <v-select v-model="selectedProduct['category.name']" :items="categories" item-title="text"
                         item-value="value" label="Категория" />
 
-                   
+
                     <v-text-field v-model="selectedProduct.description" label="Описание" variant="underlined"
                         class="form-control" />
 
-                    
+<!-- 
                     <v-text-field v-model="selectedProduct.price" label="Цена" variant="underlined" class="form-control"
-                        type="number" />
-              
+                        type="number" @input="onPriceInput" /> -->
+                        
+                        <v-text-field
+                        v-model="selectedProduct.price"
+                        label="Цена"
+                        variant="underlined"
+                        class="form-control"
+                        type="text"
+                        @keydown="onPriceKeydown"
+                        @input="onPriceInput"
+                        />
+
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer />
@@ -62,21 +72,21 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const products = ref([])
-const success = ref(false)
 const selectedProduct = ref([])
+const success = ref(false)
 const message = ref()
 const dialog = ref(false)
 const categories = ref([])
 
 const headers = [
-  { title: '', key: 'id', sortable: false  }, 
-  { title: 'Название', key: 'name' },
-  { title: 'Описание', key: 'description' },
-  { title: 'Цена', key: 'price' },
-  { title: 'Категория', key: 'category.name' },
-  { title: 'Создан', key: 'created_at' },
-  { title: 'Изменения', key: 'updated_at' },
-  { title: 'Действия', key: 'actions', sortable: false }
+    { title: '', key: 'id', sortable: false },
+    { title: 'Название', key: 'name' },
+    { title: 'Описание', key: 'description' },
+    { title: 'Цена', key: 'price' },
+    { title: 'Категория', key: 'category.name' },
+    { title: 'Создан', key: 'created_at' },
+    { title: 'Изменения', key: 'updated_at' },
+    { title: 'Действия', key: 'actions', sortable: false }
 ]
 
 async function fetchProducts() {
@@ -90,10 +100,10 @@ async function fetchProducts() {
 }
 async function fetchCategories() {
     try {
-        
+
         const response = await axios.get('http://localhost/api/getcategory')
 
-       
+
         categories.value = Object.entries(response.data).map(([name, id]) => ({
             text: name,
             value: id
@@ -119,7 +129,7 @@ async function editProduct(item) {
         console.error('Ошибка при обновлении данных:', error)
     }
 
-  
+
 }
 
 async function deleteProduct(item) {
@@ -155,7 +165,7 @@ function openDialog(product) {
     console.log(product)
     const categoryName = product['category.name'] || product.category?.name
 
-    
+
     const matched = categories.value.find(c => c.text === categoryName)
 
     selectedProduct.value = {
@@ -173,15 +183,52 @@ function showSuccess(msg) {
         success.value = false
     }, 3000)
 }
+function onPriceInput(e) {
+  
+  e.target.value = e.target.value.replace(',', '.')
+  price.value = e.target.value
+}
 
-    onMounted(() => {
-      fetchProducts()
-      fetchCategories()
-    })
+function onPriceKeydown(e) {
+  const key = e.key
+  const value = e.target.value
+  const cursorPos = e.target.selectionStart
+  const dotIndex = value.indexOf('.')
+
+  const allowedControlKeys = ['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight']
+ 
+  if (allowedControlKeys.includes(key)) return
+
+  
+  if ((key === '.' || key === ',') && cursorPos === 0) {
+    e.preventDefault()
+    return
+  }
+
+  
+  if ((key === '.' || key === ',') && !value.includes('.')) return
+ 
+  if (/^[0-9]$/.test(key)) { 
+    if (dotIndex !== -1 && cursorPos > dotIndex) {
+      const decimalPart = value.split('.')[1] || ''
+      if (decimalPart.length >= 2) {
+        e.preventDefault()
+        return
+      }
+    }
+    return
+  }
+ 
+  e.preventDefault()
+}
+onMounted(() => {
+    fetchProducts()
+    fetchCategories()
+})
 
 </script>
 <style scoped>
 th[data-column-key="id"] {
-  display: none !important;
+    display: none !important;
 }
 </style>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Services\CartService;
 
@@ -23,9 +24,12 @@ class CartController extends Controller
     public function index()
     {
         $products = $this->service->fetchNewCarts();
+        $productsLen = $this->service->fetchNewCartsLen();
 
         return response()->json([
-            'count' => $products,
+            'data' => $products,
+            'len' => $productsLen
+
         ]);
     }
 
@@ -37,7 +41,26 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'clients' => 'required|string|max:255',
+            'product_id' => 'required|integer',
+        ]);
+
+        $orderData = [
+            'clients'     => $validated['clients'],
+            'product_id'  => $validated['product_id'],
+            'comment'     => $request->input('comment') || null,
+            'quantity'    => $request->input('quantity', 1),
+            'total_cost'  => $request->input('total_cost', 0),
+        ];
+
+        $order = $this->service->addOrder($orderData);
+
+        return response()->json([
+            'message' => 'Заказ оформлен',
+            'product' => $order,
+            'code' => 201
+        ], 201);
     }
 
     /**
@@ -60,7 +83,15 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         try {
+            $this->service->updateCarts([
+                'status' =>  $request->input('status'),
+            ], $id);
+
+            return response()->json(['message' => 'Данныез заказа обновлены!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Ошибка обновления товара!'], 500);
+        }
     }
 
     /**

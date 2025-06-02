@@ -39,20 +39,25 @@
   </nav>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
+import {computed, ref, onMounted } from 'vue'
 import axios from 'axios'
+import { useOrderStore } from '@/stores/orderStore'
 
-const orderCountNew = ref(null)
+const orderStore = useOrderStore()
+const orderCountNew = computed(() => orderStore.orderCountNew)
+
+// const orderCountNew = ref(null)
 async function fetchOrder() {
     try {
         
         const response = await axios.get('http://localhost/api/order')
-        orderCountNew.value = response.data.count
+         orderStore.setOrderCount(response.data.len)
        
         console.log(response)
     } catch (error) {
-        console.error('Ошибка при получении категорий:', error)
+        console.error('Ошибка при получении заказов:', error)
     }
+    
 }
 onMounted(() => {
       fetchOrder()

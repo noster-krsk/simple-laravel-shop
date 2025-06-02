@@ -35,6 +35,7 @@
   <li>Bootstrap 5</li>
   <li>Axios</li>
   <li>Vite</li>
+  <li>Pinia</li>
 </ul>
 
 <hr>
@@ -117,6 +118,13 @@
   <li>npm run dev</li>
 </ol>
 
+<hr>
+
+<h2>🔗 Демо</h2>
+<p>
+  Готовый результат размещён на сервере по адресу:<br>
+  <a href="https://test1.webastera.com" target="_blank">https://test1.webastera.com</a>
+</p>
 <hr>
 
 <h2>📄 Лицензия</h2>
