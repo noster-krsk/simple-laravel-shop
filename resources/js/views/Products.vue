@@ -91,7 +91,7 @@ const headers = [
 
 async function fetchProducts() {
     try {
-        const response = await axios.get('http://localhost/api/product')
+        const response = await axios.get('https://test1.webastera.com/api/product')
         products.value = response.data.data
         console.log(response)
     } catch (error) {
@@ -101,7 +101,7 @@ async function fetchProducts() {
 async function fetchCategories() {
     try {
 
-        const response = await axios.get('http://localhost/api/getcategory')
+        const response = await axios.get('https://test1.webastera.com/api/getcategory')
 
 
         categories.value = Object.entries(response.data).map(([name, id]) => ({
@@ -114,7 +114,7 @@ async function fetchCategories() {
 }
 async function editProduct(item) {
     try {
-        const response = await axios.put(`http://localhost/api/product/${item}`, {
+        const response = await axios.put(`https://test1.webastera.com/api/product/${item}`, {
             name: selectedProduct.value.name,
             category: selectedProduct.value.category_id,
             description: selectedProduct.value.description,
@@ -135,7 +135,7 @@ async function editProduct(item) {
 async function deleteProduct(item) {
     if (confirm(`Удалить товар "${item.name}"?`)) {
         try {
-            const response = await axios.delete(`http://localhost/api/product/${item.id}`)
+            const response = await axios.delete(`https://test1.webastera.com/api/product/${item.id}`)
             products.value = products.value.filter(p => p.id !== item.id)
             console.log(response)
             success.value = true

@@ -50,7 +50,7 @@ const orderCountNew = computed(() => orderStore.orderCountNew)
 async function fetchOrder() {
     try {
         
-        const response = await axios.get('http://localhost/api/order')
+        const response = await axios.get('https://test1.webastera.com/api/order')
          orderStore.setOrderCount(response.data.len)
        
         console.log(response)

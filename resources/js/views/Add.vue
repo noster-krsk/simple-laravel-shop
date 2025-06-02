@@ -60,7 +60,7 @@ const message = ref(null)
 async function fetchCategories() {
   try {
 
-    const response = await axios.get('http://localhost/api/getcategory')
+    const response = await axios.get('https://test1.webastera.com/api/getcategory')
 
 
     categories.value = Object.entries(response.data).map(([name, id]) => ({
@@ -77,7 +77,7 @@ async function addNewProduct() {
   try {
 
 
-    const response = await axios.post('http://localhost/api/product', {
+    const response = await axios.post('https://test1.webastera.com/api/product', {
       name: name.value,
       category: category.value,
       description: description.value,

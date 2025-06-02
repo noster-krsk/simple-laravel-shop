@@ -130,7 +130,7 @@ const comment = ref(null)
 // Загрузка товаров
 async function fetchProducts() {
   try {
-    const response = await axios.get('http://localhost/api/product')
+    const response = await axios.get('https://test1.webastera.com/api/product')
     products.value = response.data.data.map(p => ({ ...p, quantity: 1 }))
   } catch (error) {
     console.error('Ошибка при получении товаров:', error)
@@ -161,7 +161,7 @@ async function addToCart(p) {
   total_cost: p.price * qty
 })
   try {
-    await axios.post('http://localhost/api/order', {
+    await axios.post('https://test1.webastera.com/api/order', {
       clients: fio.value,
       comment: comment.value || '',
       product_id: p.id,

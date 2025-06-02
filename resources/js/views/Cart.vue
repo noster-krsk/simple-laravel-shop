@@ -39,7 +39,7 @@ const orderCount = computed(() => store.orderCountNew)
 
 async function updateStatus(order) {
     try {
-        await axios.put(`http://localhost/api/order/${order.id}`, {
+        await axios.put(`https://test1.webastera.com/api/order/${order.id}`, {
             status: order.status,
         })
         showSuccess('Статус заказа обновлен!')
@@ -61,7 +61,7 @@ const headers = [
 ]
 async function fetchProducts() {
     try {
-        const response = await axios.get('http://localhost/api/order')
+        const response = await axios.get('https://test1.webastera.com/api/order')
         products.value = response.data.data
 
     } catch (error) {

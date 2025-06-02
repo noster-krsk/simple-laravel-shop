@@ -6,7 +6,7 @@ import axios from 'axios'
 import { createPinia } from 'pinia'
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost'
+axios.defaults.baseURL = 'https://test1.webastera.com'
 const app = createApp(App)
 
 app.config.globalProperties.$axios = axios
