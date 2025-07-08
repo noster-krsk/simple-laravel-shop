@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\PriceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +22,9 @@ Route::get('/getcategory', [CategoriesController::class, 'index']);
 Route::apiResource('product', ProductController::class);
 
 Route::apiResource('order', CartController::class);
+
+
+Route::apiResource('prices', PriceController::class);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <title>Vue + Laravel</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+   @vite('resources/js/app.js')
 </head>
 
 <body>
